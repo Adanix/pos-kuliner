@@ -114,4 +114,98 @@ class StockAndHppTest extends TestCase
             'qty_delta' => -150,
         ]);
     }
+
+    public function test_menu_store_with_recipe_items_persists_recipe_and_calculates_hpp(): void
+    {
+        $owner = User::create([
+            'name' => 'Owner Test',
+            'email' => 'owner@stok.id',
+            'role' => UserRole::OWNER,
+            'password' => Hash::make('password123'),
+            'is_active' => true,
+        ]);
+
+        $category = Category::first();
+
+        // Create menu with recipe items directly
+        $response = $this->actingAs($owner)->post('/menu', [
+            'category_id' => $category->id,
+            'name' => 'Ayam Penyet Sambal Ijo',
+            'price' => '25000',
+            'description' => 'Ayam penyet gurih pedas.',
+            'has_recipe_builder' => 1,
+            'recipe_items' => [
+                [
+                    'ingredient_id' => $this->ayam->id,
+                    'qty_base' => 120, // 120g * Rp 50 = Rp 6.000 HPP
+                ],
+            ],
+        ]);
+
+        $response->assertRedirect('/menu');
+        $createdMenu = Menu::where('name', 'Ayam Penyet Sambal Ijo')->first();
+        $this->assertNotNull($createdMenu);
+        $this->assertNotNull($createdMenu->recipe);
+        $this->assertCount(1, $createdMenu->recipe->items);
+
+        $hppService = app(\App\Services\HppService::class);
+        $hppInfo = $hppService->calculateForMenu($createdMenu);
+        $this->assertTrue($hppInfo['hpp_complete']);
+        $this->assertEquals(6000, $hppInfo['unit_hpp']);
+
+        // Update menu with recipe items
+        $responseUpdate = $this->actingAs($owner)->put('/menu/' . $createdMenu->id, [
+            'category_id' => $category->id,
+            'name' => 'Ayam Penyet Sambal Ijo',
+            'price' => '30000',
+            'is_active' => 1,
+            'has_recipe_builder' => 1,
+            'recipe_items' => [
+                [
+                    'ingredient_id' => $this->ayam->id,
+                    'qty_base' => 150, // 150g * Rp 50 = Rp 7.500 HPP
+                ],
+            ],
+        ]);
+
+        $responseUpdate->assertRedirect('/menu');
+        $createdMenu->refresh();
+        $this->assertEquals(30000, $createdMenu->price);
+        $updatedHppInfo = $hppService->calculateForMenu($createdMenu);
+        $this->assertEquals(7500, $updatedHppInfo['unit_hpp']);
+    }
+
+    public function test_recipes_index_displays_metrics_and_margin(): void
+    {
+        $owner = User::create([
+            'name' => 'Owner Resep',
+            'email' => 'owner2@stok.id',
+            'role' => UserRole::OWNER,
+            'password' => Hash::make('password123'),
+            'is_active' => true,
+        ]);
+
+        $response = $this->actingAs($owner)->get('/resep');
+        $response->assertStatus(200);
+        $response->assertViewHas('metrics');
+        $metrics = $response->viewData('metrics');
+        $this->assertGreaterThanOrEqual(1, $metrics['total_menus']);
+        $this->assertGreaterThanOrEqual(1, $metrics['with_recipe_count']);
+    }
+
+    public function test_ingredients_index_displays_used_in_menu(): void
+    {
+        $owner = User::create([
+            'name' => 'Owner Bahan',
+            'email' => 'owner3@stok.id',
+            'role' => UserRole::OWNER,
+            'password' => Hash::make('password123'),
+            'is_active' => true,
+        ]);
+
+        $response = $this->actingAs($owner)->get('/bahan');
+        $response->assertStatus(200);
+        $response->assertSee('Digunakan di Menu');
+        $response->assertSee($this->menu->name);
+    }
 }

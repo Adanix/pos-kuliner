@@ -31,6 +31,7 @@
                         <tr>
                             <th class="px-3 py-2.5 rounded-l-lg">Kode / Nama Bahan</th>
                             <th class="px-3 py-2.5 text-center">Satuan Dasar</th>
+                            <th class="px-3 py-2.5">Digunakan di Menu</th>
                             <th class="px-3 py-2.5 text-right">Stok Saat Ini</th>
                             <th class="px-3 py-2.5 text-right">Batas Minimum</th>
                             <th class="px-3 py-2.5 text-right">Harga Satuan (WAC)</th>
@@ -50,6 +51,27 @@
                                     <span class="text-xs px-2 py-0.5 rounded-md bg-[#FAF8F5] border border-[#D3C9BD] font-bold text-[#575047]">
                                         {{ $ing->base_unit }}
                                     </span>
+                                </td>
+                                <td class="px-3 py-3">
+                                    @php
+                                        $menusUsing = $ing->recipeItems->map(fn($item) => $item->recipe?->menu)->filter()->unique('id');
+                                    @endphp
+                                    @if($menusUsing->isNotEmpty())
+                                        <div class="flex flex-wrap gap-1 max-w-xs">
+                                            @foreach($menusUsing->take(2) as $m)
+                                                <span class="inline-block text-[11px] px-2 py-0.5 rounded-md bg-[#FAF8F5] border border-[#E7E0D6] text-[#575047] truncate max-w-[120px]" title="{{ $m->name }}">
+                                                    {{ $m->name }}
+                                                </span>
+                                            @endforeach
+                                            @if($menusUsing->count() > 2)
+                                                <span class="text-[10px] px-1.5 py-0.5 rounded-md bg-[#F4F0EA] text-[#575047] font-semibold self-center" title="{{ $menusUsing->pluck('name')->implode(', ') }}">
+                                                    +{{ $menusUsing->count() - 2 }} menu
+                                                </span>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <span class="text-xs text-[#9E9385] italic">Belum terhubung</span>
+                                    @endif
                                 </td>
                                 <td class="px-3 py-3 text-right font-bold tabular-nums {{ $ing->isLowStock() ? 'text-[#DC2626]' : 'text-[#14110F]' }}">
                                     {{ (float) $ing->stock_qty }} {{ $ing->base_unit }}

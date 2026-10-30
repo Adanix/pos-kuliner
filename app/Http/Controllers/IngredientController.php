@@ -14,7 +14,7 @@ class IngredientController extends Controller
 
     public function index(Request $request)
     {
-        $query = Ingredient::query();
+        $query = Ingredient::with(['recipeItems.recipe.menu']);
 
         if ($search = $request->input('search')) {
             $query->where(function ($q) use ($search) {

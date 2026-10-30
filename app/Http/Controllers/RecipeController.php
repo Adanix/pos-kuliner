@@ -17,17 +17,52 @@ class RecipeController extends Controller
 
     public function index()
     {
+        $allActiveMenus = Menu::with(['recipe.items.ingredient'])
+            ->where('is_active', true)
+            ->get();
+
+        $totalMenus = $allActiveMenus->count();
+        $withRecipeCount = 0;
+        $margins = [];
+
+        foreach ($allActiveMenus as $m) {
+            $hpp = $this->hppService->calculateForMenu($m);
+            $hasValidRecipe = ! empty($m->recipe) && $m->recipe->items->isNotEmpty();
+            if ($hasValidRecipe) {
+                $withRecipeCount++;
+            }
+            if ($hpp['hpp_complete'] && $hpp['unit_hpp'] !== null && $m->price > 0) {
+                $margins[] = (($m->price - $hpp['unit_hpp']) / $m->price) * 100;
+            }
+        }
+
+        $avgMargin = ! empty($margins) ? round(array_sum($margins) / count($margins), 1) : 0;
+        $needRecipeCount = $totalMenus - $withRecipeCount;
+
         $menus = Menu::with(['category', 'recipe.items.ingredient'])
             ->where('is_active', true)
             ->orderBy('name')
             ->paginate(20);
 
         $menus->getCollection()->transform(function ($menu) {
-            $menu->hpp_info = $this->hppService->calculateForMenu($menu);
+            $hpp = $this->hppService->calculateForMenu($menu);
+            $menu->hpp_info = $hpp;
+            if ($hpp['hpp_complete'] && $hpp['unit_hpp'] !== null && $menu->price > 0) {
+                $menu->margin_percent = round((($menu->price - $hpp['unit_hpp']) / $menu->price) * 100, 1);
+            } else {
+                $menu->margin_percent = null;
+            }
             return $menu;
         });
 
-        return view('recipes.index', compact('menus'));
+        $metrics = [
+            'total_menus' => $totalMenus,
+            'with_recipe_count' => $withRecipeCount,
+            'avg_margin' => $avgMargin,
+            'need_recipe_count' => $needRecipeCount,
+        ];
+
+        return view('recipes.index', compact('menus', 'metrics'));
     }
 
     public function edit(Menu $menu)

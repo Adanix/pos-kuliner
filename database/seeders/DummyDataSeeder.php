@@ -342,6 +342,16 @@ class DummyDataSeeder extends Seeder
                     'ING-PCK' => 1,
                 ],
             ],
+            [
+                'category' => 'Kopi & Teh',
+                'name' => 'Es teh tawar',
+                'description' => 'Teh melati seduh dingin segar tanpa gula, disajikan dengan es batu melimpah.',
+                'price' => 3000,
+                'recipe' => [
+                    'ING-TEH' => 10,
+                    'ING-PCK' => 1,
+                ],
+            ],
 
             // Paket Nasi Hemat
             [
@@ -389,6 +399,7 @@ class DummyDataSeeder extends Seeder
             'Tempe Mendoan Gurih (4 Pcs)' => '/images/menus/tempe-mendoan.svg',
             'Kentang Goreng Saus Keju' => '/images/menus/kentang-keju.svg',
             'Es Teh Manis Jumbo' => '/images/menus/es-teh-jumbo.svg',
+            'Es teh tawar' => '/images/menus/es-teh-jumbo.svg',
             'Es Jeruk Nipis Madu' => '/images/menus/es-jeruk-madu.svg',
             'Es Kopi Susu Gula Aren' => '/images/menus/kopi-susu-aren.svg',
             'Teh Tarik Dingin' => '/images/menus/teh-tarik.svg',
