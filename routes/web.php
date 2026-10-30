@@ -64,6 +64,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/impor/{aiImport}', [AiImportController::class, 'review'])->name('impor.review');
         Route::get('/impor/{aiImport}/gambar', [AiImportController::class, 'image'])->name('impor.image');
         Route::post('/impor/{aiImport}/simpan', [AiImportController::class, 'saveTransaction'])->name('impor.save');
+        Route::post('/impor/{aiImport}/retry', [AiImportController::class, 'retry'])->name('impor.retry');
+        Route::delete('/impor/{aiImport}', [AiImportController::class, 'destroy'])->name('impor.destroy');
     });
 
     // Owner Operations (Owner only)

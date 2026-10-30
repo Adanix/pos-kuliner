@@ -50,9 +50,9 @@ class AiExtractionValidator
 
             // Strip PII from item notes if any
             $notes = isset($iRow['notes']) && is_string($iRow['notes']) ? trim($iRow['notes']) : null;
-            $sourceName = isset($iRow['source_name']) ? trim((string) $iRow['source_name']) : 'Item Tanpa Nama';
-            $qty = isset($iRow['quantity']) ? max(1, min(99, (int) $iRow['quantity'])) : 1;
-            $unitPrice = isset($iRow['visible_unit_price']) ? max(0, (int) $iRow['visible_unit_price']) : 0;
+            $sourceName = isset($iRow['source_name']) ? trim((string) $iRow['source_name']) : (isset($iRow['name']) ? trim((string) $iRow['name']) : 'Item Tanpa Nama');
+            $qty = isset($iRow['quantity']) ? max(1, min(99, (int) $iRow['quantity'])) : (isset($iRow['qty']) ? max(1, min(99, (int) $iRow['qty'])) : 1);
+            $unitPrice = isset($iRow['visible_unit_price']) ? max(0, (int) $iRow['visible_unit_price']) : (isset($iRow['price']) ? max(0, (int) $iRow['price']) : 0);
             $lineTotal = isset($iRow['visible_line_total']) ? max(0, (int) $iRow['visible_line_total']) : ($qty * $unitPrice);
 
             // Arithmetic check on item level
@@ -64,8 +64,11 @@ class AiExtractionValidator
 
             $items[] = [
                 'source_name' => $sourceName,
+                'name' => $sourceName,
                 'quantity' => $qty,
+                'qty' => $qty,
                 'visible_unit_price' => $unitPrice,
+                'price' => $unitPrice,
                 'visible_line_total' => $lineTotal,
                 'notes' => $notes,
                 'unreadable_fields' => is_array($iRow['unreadable_fields'] ?? null) ? $iRow['unreadable_fields'] : [],

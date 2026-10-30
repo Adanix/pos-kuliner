@@ -93,4 +93,43 @@ class AiImportTest extends TestCase
         $res->assertSessionHas('error');
         $this->assertNotEquals('saved', $import->fresh()->status->value);
     }
+
+    public function test_review_page_handles_missing_keys_without_error(): void
+    {
+        $import = \App\Models\AiImport::create([
+            'user_id' => $this->owner->id,
+            'channel_selected' => 'gofood',
+            'image_path' => storage_path('app/test.jpg'),
+            'image_hash' => 'dummyhash123',
+            'image_bytes' => 100,
+            'status' => \App\Enums\AiImportStatus::NEEDS_REVIEW,
+            'platform_order_id' => 'GF-9999',
+            'extracted' => [
+                'channel' => 'gofood',
+                'items' => [
+                    ['name' => 'Legacy Item', 'qty' => 2, 'price' => 15000],
+                ],
+            ],
+        ]);
+
+        $res = $this->actingAs($this->owner)->get("/impor/{$import->id}");
+        $res->assertStatus(200);
+        $res->assertSee('Legacy Item');
+    }
+
+    public function test_destroy_import_deletes_record(): void
+    {
+        $import = \App\Models\AiImport::create([
+            'user_id' => $this->owner->id,
+            'channel_selected' => 'gofood',
+            'image_path' => storage_path('app/test.jpg'),
+            'image_hash' => 'dummyhash456',
+            'image_bytes' => 100,
+            'status' => \App\Enums\AiImportStatus::FAILED,
+        ]);
+
+        $res = $this->actingAs($this->owner)->delete("/impor/{$import->id}");
+        $res->assertRedirect('/impor');
+        $this->assertDatabaseMissing('ai_imports', ['id' => $import->id]);
+    }
 }

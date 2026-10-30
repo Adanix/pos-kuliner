@@ -122,7 +122,7 @@ class CioraClient
 
     protected function callOpenAiProtocol(string $base64, string $mime): array
     {
-        $prompt = "Kamu mengekstrak data pesanan makanan dari screenshot GoFood atau ShopeeFood. Balas HANYA JSON murni. Skema: {\"platform\": \"gofood|shopeefood|unknown\", \"platform_order_id\": string|null, \"ordered_at\": string|null, \"items\": [{\"source_name\": string, \"quantity\": int, \"visible_unit_price\": int, \"visible_line_total\": int, \"notes\": string|null, \"unreadable_fields\": []}], \"visible_subtotal\": int, \"visible_discount\": int, \"visible_order_total\": int, \"visible_other_fees\": int, \"unreadable_fields\": []}. Jangan simpan data pribadi pelanggan.";
+        $prompt = 'Ekstrak data pesanan GoFood/ShopeeFood dari gambar. Jangan sertakan teks penjelasan atau penalaran panjang, balas HANYA format JSON murni. Skema: {"platform": "gofood|shopeefood|unknown", "platform_order_id": string|null, "ordered_at": string|null, "items": [{"source_name": string, "quantity": int, "visible_unit_price": int, "visible_line_total": int, "notes": string|null, "unreadable_fields": []}], "visible_subtotal": int, "visible_discount": int, "visible_order_total": int, "visible_other_fees": int, "unreadable_fields": []}. DILARANG mengekstrak data pribadi pelanggan seperti nama penerima, nomor HP, atau alamat rumah.';
 
         $payload = [
             'model' => $this->model,
@@ -138,8 +138,7 @@ class CioraClient
                     ],
                 ],
             ],
-            'response_format' => ['type' => 'json_object'],
-            'max_tokens' => 2048,
+            'max_tokens' => 4096,
         ];
 
         $res = Http::withToken($this->apiKey)
@@ -174,6 +173,15 @@ class CioraClient
         if (str_ends_with($text, '```')) {
             $text = substr($text, 0, -3);
         }
+        $text = trim($text);
+
+        // Extract valid JSON block between first '{' and last '}'
+        $firstBrace = strpos($text, '{');
+        $lastBrace = strrpos($text, '}');
+        if ($firstBrace !== false && $lastBrace !== false && $lastBrace > $firstBrace) {
+            $text = substr($text, $firstBrace, $lastBrace - $firstBrace + 1);
+        }
+
         return trim($text);
     }
 

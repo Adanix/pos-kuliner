@@ -94,6 +94,41 @@ class AiImportController extends Controller
         return view('ai-imports.review', compact('aiImport', 'allMenus'));
     }
 
+    public function retry(AiImport $aiImport)
+    {
+        if ($aiImport->status === AiImportStatus::SAVED) {
+            return redirect()->route('impor.review', $aiImport)
+                ->with('info', 'Impor ini sudah berstatus tersimpan sebagai transaksi.');
+        }
+
+        try {
+            ProcessAiImport::dispatchSync($aiImport);
+
+            return redirect()->route('impor.review', $aiImport)
+                ->with('success', 'Ekstraksi ulang dengan AI Vision berhasil dilakukan!');
+        } catch (\Throwable $e) {
+            return redirect()->route('impor.review', $aiImport)
+                ->with('error', 'Gagal memproses ulang AI: ' . $e->getMessage());
+        }
+    }
+
+    public function destroy(AiImport $aiImport)
+    {
+        if ($aiImport->status === AiImportStatus::SAVED) {
+            return redirect()->route('impor.index')
+                ->with('error', 'Impor yang sudah disimpan ke transaksi resmi tidak dapat dihapus.');
+        }
+
+        if (file_exists($aiImport->image_path)) {
+            @unlink($aiImport->image_path);
+        }
+
+        $aiImport->delete();
+
+        return redirect()->route('impor.index')
+            ->with('success', 'Data impor tangkapan layar berhasil dihapus.');
+    }
+
     public function image(AiImport $aiImport)
     {
         $path = $aiImport->image_path;

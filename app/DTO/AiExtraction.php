@@ -37,12 +37,17 @@ class AiExtraction
     {
         return [
             'platform' => $this->platform,
+            'channel' => $this->platform,
             'platform_order_id' => $this->platformOrderId,
+            'order_id' => $this->platformOrderId,
             'ordered_at' => $this->orderedAt,
             'items' => $this->items,
             'visible_subtotal' => $this->visibleSubtotal,
+            'subtotal' => $this->visibleSubtotal,
             'visible_discount' => $this->visibleDiscount,
+            'discount' => $this->visibleDiscount,
             'visible_order_total' => $this->visibleOrderTotal,
+            'total' => $this->visibleOrderTotal,
             'visible_other_fees' => $this->visibleOtherFees,
             'unreadable_fields' => $this->unreadableFields,
             'review_flags' => $this->reviewFlags,

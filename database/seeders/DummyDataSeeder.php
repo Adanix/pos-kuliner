@@ -781,14 +781,18 @@ class DummyDataSeeder extends Seeder
                 'order_id' => sprintf('GF-%s-0774', $todayCode),
                 'items' => [
                     [
+                        'source_name' => 'Ayam Kremes Sambal Bawang Pedas',
                         'name' => 'Ayam Kremes Sambal Bawang Pedas',
+                        'quantity' => 2,
                         'qty' => 2,
                         'price' => 25000,
                         'matched_menu_id' => $menus['Ayam Goreng Kremes Sambal Bawang']->id,
                         'matched_menu_name' => 'Ayam Goreng Kremes Sambal Bawang',
                     ],
                     [
+                        'source_name' => 'Es Teh Manis Jumbo',
                         'name' => 'Es Teh Manis Jumbo',
+                        'quantity' => 2,
                         'qty' => 2,
                         'price' => 6000,
                         'matched_menu_id' => $menus['Es Teh Manis Jumbo']->id,
@@ -824,14 +828,18 @@ class DummyDataSeeder extends Seeder
                 'order_id' => sprintf('SPF-%s-0551', $todayCode),
                 'items' => [
                     [
+                        'source_name' => 'Soto Betawi Daging Sapi Kuah Santan',
                         'name' => 'Soto Betawi Daging Sapi Kuah Santan',
+                        'quantity' => 1,
                         'qty' => 1,
                         'price' => 38000,
                         'matched_menu_id' => $menus['Soto Betawi Daging Sapi Kuah Santan']->id,
                         'matched_menu_name' => 'Soto Betawi Daging Sapi Kuah Santan',
                     ],
                     [
+                        'source_name' => 'Es Teh Manis Jumbo',
                         'name' => 'Es Teh Manis Jumbo',
+                        'quantity' => 1,
                         'qty' => 1,
                         'price' => 6000,
                         'matched_menu_id' => $menus['Es Teh Manis Jumbo']->id,

@@ -37,7 +37,15 @@ class DuplicateDetector
      */
     public function checkSimilarity(string $channel, int $total, ?string $dateStr = null): array
     {
-        $date = $dateStr ? Carbon::parse($dateStr, 'Asia/Jakarta') : Carbon::now('Asia/Jakarta');
+        $date = Carbon::now('Asia/Jakarta');
+        if (! empty($dateStr)) {
+            try {
+                $date = Carbon::parse($dateStr, 'Asia/Jakarta');
+            } catch (\Throwable) {
+                // If localized date format like 'Jumat, 18 Februari 2022' or unparseable, fallback safely
+                $date = Carbon::now('Asia/Jakarta');
+            }
+        }
         $start = $date->copy()->subDay()->startOfDay();
         $end = $date->copy()->addDay()->endOfDay();
 
