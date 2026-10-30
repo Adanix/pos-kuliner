@@ -58,11 +58,11 @@ class AiImportController extends Controller
         $duplicate = $this->duplicateDetector->checkImageHash($hash);
 
         $now = Carbon::now();
-        $subDir = "private/ai-imports/{$now->format('Y')}/{$now->format('m')}";
+        $subDir = "ai-imports/{$now->format('Y')}/{$now->format('m')}";
         $ext = $file->getClientOriginalExtension();
         $filename = Str::uuid() . '.' . $ext;
-        $savedPath = $file->storeAs($subDir, $filename);
-        $fullPath = storage_path('app/' . $savedPath);
+        $savedPath = $file->storeAs($subDir, $filename, 'local');
+        $fullPath = Storage::disk('local')->path($savedPath);
 
         $aiImport = AiImport::create([
             'user_id' => auth()->id(),
@@ -96,12 +96,18 @@ class AiImportController extends Controller
 
     public function image(AiImport $aiImport)
     {
-        if (! file_exists($aiImport->image_path)) {
-            abort(404, 'Gambar tidak ditemukan.');
+        $path = $aiImport->image_path;
+        if (! file_exists($path)) {
+            $fallback = str_replace('app/private/ai-imports', 'app/private/private/ai-imports', $path);
+            if (file_exists($fallback)) {
+                $path = $fallback;
+            } else {
+                abort(404, 'Gambar tidak ditemukan.');
+            }
         }
 
-        $mime = mime_content_type($aiImport->image_path);
-        return response()->file($aiImport->image_path, [
+        $mime = mime_content_type($path);
+        return response()->file($path, [
             'Content-Type' => $mime,
             'Cache-Control' => 'private, no-cache',
         ]);

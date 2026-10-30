@@ -54,9 +54,9 @@ class MenuController extends Controller
         $imagePath = null;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $filename = 'menus/' . Str::uuid() . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('public', $filename);
-            $imagePath = Storage::url($path);
+            $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('menus', $filename, 'public');
+            $imagePath = '/storage/' . $path;
         }
 
         $menu = Menu::create([
@@ -90,9 +90,9 @@ class MenuController extends Controller
         $imagePath = $menu->image_path;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $filename = 'menus/' . Str::uuid() . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('public', $filename);
-            $imagePath = Storage::url($path);
+            $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('menus', $filename, 'public');
+            $imagePath = '/storage/' . $path;
         }
 
         $menu->update([

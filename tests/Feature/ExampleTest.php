@@ -60,4 +60,41 @@ class ExampleTest extends TestCase
         $this->assertNotEquals($num2, $num3);
         $this->assertStringStartsWith('CIO-', $num1);
     }
+
+    public function test_menu_image_upload_and_storage_path(): void
+    {
+        \Illuminate\Support\Facades\Storage::fake('public');
+
+        $owner = User::create([
+            'name' => 'Owner Menu Test',
+            'email' => 'owner@menu.test',
+            'role' => UserRole::OWNER,
+            'password' => Hash::make('password123'),
+            'is_active' => true,
+        ]);
+
+        $category = \App\Models\Category::create(['name' => 'Minuman', 'sort_order' => 1, 'is_active' => true]);
+
+        $rawJpg = base64_decode('/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=');
+        $tmp = tempnam(sys_get_temp_dir(), 'test_jpg');
+        file_put_contents($tmp, $rawJpg);
+        $file = new \Illuminate\Http\UploadedFile($tmp, 'menu_foto.jpg', 'image/jpeg', null, true);
+
+        $response = $this->actingAs($owner)->post('/menu', [
+            'category_id' => $category->id,
+            'name' => 'Es Cendol Durian',
+            'price' => '25000',
+            'description' => 'Segar dan manis',
+            'image' => $file,
+        ]);
+
+        $response->assertRedirect('/menu');
+
+        $menu = \App\Models\Menu::where('name', 'Es Cendol Durian')->first();
+        $this->assertNotNull($menu);
+        $this->assertStringStartsWith('/storage/menus/', $menu->image_path);
+
+        $relativeStoragePath = str_replace('/storage/', '', $menu->image_path);
+        \Illuminate\Support\Facades\Storage::disk('public')->assertExists($relativeStoragePath);
+    }
 }
