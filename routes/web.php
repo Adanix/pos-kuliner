@@ -28,8 +28,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
 });
 
-Route::post('/login/demo', [AuthController::class, 'demoLogin'])->name('login.demo');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+Route::match(['get', 'post'], '/login/demo', [AuthController::class, 'demoLogin'])->name('login.demo');
+Route::match(['get', 'post'], '/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/pin/verify', [AuthController::class, 'verifyPin'])->name('pin.verify')->middleware('auth');
 
 // Protected Routes (Must be logged in)

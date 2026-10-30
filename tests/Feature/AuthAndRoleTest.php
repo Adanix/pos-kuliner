@@ -61,6 +61,52 @@ class AuthAndRoleTest extends TestCase
         $this->assertAuthenticatedAs($cashier);
     }
 
+    public function test_demo_login_via_get_method(): void
+    {
+        $owner = User::create([
+            'name' => 'Demo Owner GET',
+            'email' => 'owner_get@demo.id',
+            'role' => UserRole::OWNER,
+            'password' => Hash::make('secret'),
+            'is_active' => true,
+        ]);
+
+        $response = $this->get('/login/demo');
+        $response->assertRedirect('/dashboard');
+        $this->assertAuthenticatedAs($owner);
+    }
+
+    public function test_demo_login_via_get_method_with_cashier_role(): void
+    {
+        $cashier = User::create([
+            'name' => 'Demo Cashier GET',
+            'email' => 'cashier_get@demo.id',
+            'role' => UserRole::CASHIER,
+            'password' => Hash::make('secret'),
+            'is_active' => true,
+        ]);
+
+        $response = $this->get('/login/demo?role=cashier');
+        $response->assertRedirect('/kasir');
+        $this->assertAuthenticatedAs($cashier);
+    }
+
+    public function test_logout_via_get_method(): void
+    {
+        $user = User::create([
+            'name' => 'Logout User',
+            'email' => 'logout@test.id',
+            'role' => UserRole::OWNER,
+            'password' => Hash::make('secret'),
+            'is_active' => true,
+        ]);
+
+        $this->actingAs($user);
+        $response = $this->get('/logout');
+        $response->assertRedirect('/login');
+        $this->assertGuest();
+    }
+
     public function test_cashier_restricted_from_owner_areas(): void
     {
         $cashier = User::create([
