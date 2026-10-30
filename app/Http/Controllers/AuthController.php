@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -14,7 +15,7 @@ class AuthController extends Controller
     public function showLogin()
     {
         if (Auth::check()) {
-            return redirect()->route('dashboard');
+            return Auth::user()->isOwner() ? redirect()->route('dashboard') : redirect()->route('pos.index');
         }
         return view('auth.login');
     }
@@ -60,6 +61,32 @@ class AuthController extends Controller
         return back()->withErrors([
             'email' => 'Email atau kata sandi yang Anda masukkan salah.',
         ])->onlyInput('email');
+    }
+
+    public function demoLogin(Request $request)
+    {
+        $role = $request->input('role', 'owner');
+
+        $user = match($role) {
+            'cashier' => User::where('role', UserRole::CASHIER)->where('is_active', true)->first(),
+            default => User::where('role', UserRole::OWNER)->where('is_active', true)->first(),
+        };
+
+        if (! $user) {
+            return back()->withErrors(['email' => 'Akun demo untuk peran ini belum tersedia.']);
+        }
+
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        $user->last_login_at = Carbon::now('Asia/Jakarta');
+        $user->save();
+
+        if ($user->isCashier()) {
+            return redirect()->route('pos.index')->with('success', "Selamat datang di Demo Kasir! Anda login sebagai {$user->name}.");
+        }
+
+        return redirect()->route('dashboard')->with('success', "Selamat datang di Demo Pemilik! Anda login sebagai {$user->name}.");
     }
 
     public function logout(Request $request)

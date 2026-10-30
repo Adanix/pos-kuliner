@@ -18,7 +18,7 @@
             Aturan Operasional
         </button>
         <button @click="tab = 'ai'" :class="tab === 'ai' ? 'border-[#C2410C] text-[#C2410C]' : 'border-transparent text-[#575047] hover:text-[#14110F]'" class="py-3 border-b-2 whitespace-nowrap">
-            AI Ciora & Privasi
+            AI Vision & Privasi
         </button>
         <button @click="tab = 'users'" :class="tab === 'users' ? 'border-[#C2410C] text-[#C2410C]' : 'border-transparent text-[#575047] hover:text-[#14110F]'" class="py-3 border-b-2 whitespace-nowrap">
             Pengguna & Kasir
@@ -133,7 +133,7 @@
             </div>
         </div>
 
-        <!-- Tab 3: AI Ciora & Privasi -->
+        <!-- Tab 3: AI Vision & Privasi -->
         <div x-show="tab === 'ai'" class="bg-white rounded-2xl border border-[#E7E0D6] p-6 shadow-sm space-y-4 max-w-2xl">
             <h3 class="font-bold text-base text-[#14110F] mb-3">Konfigurasi Vision AI & Privasi Pelanggan</h3>
 

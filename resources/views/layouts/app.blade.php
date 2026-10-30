@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title ?? 'Ciora POS Kuliner' }}</title>
+    <title>{{ $title ?? 'POS Kuliner' }}</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
@@ -17,8 +17,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <a href="{{ auth()->user()?->isOwner() ? route('dashboard') : route('pos.index') }}" class="flex items-center gap-2">
-                    <span class="w-9 h-9 rounded-xl bg-[#C2410C] text-white flex items-center justify-center font-bold text-lg shadow-sm">C</span>
-                    <span class="font-bold text-lg tracking-tight text-[#14110F]">Ciora <span class="text-[#C2410C] font-semibold">POS</span></span>
+                    <span class="w-9 h-9 rounded-xl bg-[#C2410C] text-white flex items-center justify-center font-bold text-lg shadow-sm">P</span>
+                    <span class="font-bold text-lg tracking-tight text-[#14110F]">POS <span class="text-[#C2410C] font-semibold">Kuliner</span></span>
                 </a>
                 <span class="hidden sm:inline-flex text-xs px-2.5 py-1 rounded-full font-medium bg-[#FFF4EC] text-[#C2410C] border border-[#FFE6D5]">
                     {{ auth()->user()?->isOwner() ? 'Pemilik' : 'Kasir' }}
@@ -50,6 +50,8 @@
                         @if(auth()->user()?->isOwner())
                             <a href="{{ route('settings.edit') }}" class="block px-4 py-2 text-sm text-[#14110F] hover:bg-[#FAF8F5]">Pengaturan</a>
                         @endif
+                        <a href="{{ route('docs') }}" target="_blank" class="block px-4 py-2 text-sm text-[#14110F] hover:bg-[#FAF8F5]">Dokumentasi Fitur ↗</a>
+                        <a href="{{ route('home') }}" class="block px-4 py-2 text-sm text-[#575047] hover:bg-[#FAF8F5]">Halaman Beranda</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="w-full text-left px-4 py-2 text-sm text-[#DC2626] hover:bg-[#FEF2F2]">Keluar (Logout)</button>
@@ -131,6 +133,18 @@
                         <span>Pengaturan</span>
                     </a>
                 @endif
+
+                <div class="pt-4 pb-2 px-3 text-[11px] font-bold tracking-wider text-[#9E9385] uppercase">Bantuan &amp; Info</div>
+
+                <a href="{{ route('docs') }}" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition text-[#575047] hover:bg-[#FAF8F5] hover:text-[#14110F]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    <span>Dokumentasi ↗</span>
+                </a>
+
+                <a href="{{ route('home') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition text-[#575047] hover:bg-[#FAF8F5] hover:text-[#14110F]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    <span>Beranda Publik</span>
+                </a>
             </nav>
         </aside>
 

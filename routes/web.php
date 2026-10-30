@@ -4,6 +4,7 @@ use App\Http\Controllers\AiImportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PosController;
@@ -17,12 +18,17 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\WizardController;
 use Illuminate\Support\Facades\Route;
 
-// Public Auth Routes
+// Public Informational & Landing Routes
+Route::get('/', [HomeController::class, 'landing'])->name('home');
+Route::get('/docs', [HomeController::class, 'docs'])->name('docs');
+
+// Public Auth & Demo Login
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
 });
 
+Route::post('/login/demo', [AuthController::class, 'demoLogin'])->name('login.demo');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 Route::post('/pin/verify', [AuthController::class, 'verifyPin'])->name('pin.verify')->middleware('auth');
 
@@ -62,8 +68,8 @@ Route::middleware('auth')->group(function () {
 
     // Owner Operations (Owner only)
     Route::middleware('role:owner')->group(function () {
-        // Dashboard
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        // Owner Dashboard
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // Void Transaction
         Route::post('/transaksi/{transaction}/void', [TransactionController::class, 'void'])->name('transactions.void');

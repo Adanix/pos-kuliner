@@ -27,8 +27,38 @@ class AuthAndRoleTest extends TestCase
             'password' => 'password123',
         ]);
 
-        $response->assertRedirect('/');
+        $response->assertRedirect('/dashboard');
         $this->assertAuthenticatedAs($owner);
+    }
+
+    public function test_demo_login_as_owner(): void
+    {
+        $owner = User::create([
+            'name' => 'Demo Owner',
+            'email' => 'owner@demo.id',
+            'role' => UserRole::OWNER,
+            'password' => Hash::make('secret'),
+            'is_active' => true,
+        ]);
+
+        $response = $this->post('/login/demo', ['role' => 'owner']);
+        $response->assertRedirect('/dashboard');
+        $this->assertAuthenticatedAs($owner);
+    }
+
+    public function test_demo_login_as_cashier(): void
+    {
+        $cashier = User::create([
+            'name' => 'Demo Cashier',
+            'email' => 'cashier@demo.id',
+            'role' => UserRole::CASHIER,
+            'password' => Hash::make('secret'),
+            'is_active' => true,
+        ]);
+
+        $response = $this->post('/login/demo', ['role' => 'cashier']);
+        $response->assertRedirect('/kasir');
+        $this->assertAuthenticatedAs($cashier);
     }
 
     public function test_cashier_restricted_from_owner_areas(): void
