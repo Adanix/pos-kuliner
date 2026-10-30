@@ -31,6 +31,12 @@
                 <option value="gofood">GoFood</option>
                 <option value="shopeefood">ShopeeFood</option>
             </select>
+
+            @if(auth()->user()?->isOwner())
+                <a href="{{ route('menu.index') }}" title="Kelola Menu & Harga" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#FAF8F5] border border-[#D3C9BD] text-[#575047] hover:text-[#C2410C] hover:border-[#C2410C] transition">
+                    <span>⚙️ Kelola Menu</span>
+                </a>
+            @endif
         </div>
     </div>
 
@@ -397,11 +403,16 @@ function posApp() {
         },
 
         clearCart() {
-            if (confirm('Kosongkan keranjang pesanan?')) {
-                this.cart = [];
-                localStorage.removeItem('ciora_cart_draft');
-                this.generateIdempotencyKey();
-            }
+            window.showConfirm(
+                'Apakah Anda yakin ingin mengosongkan seluruh isi keranjang pesanan?',
+                () => {
+                    this.cart = [];
+                    localStorage.removeItem('ciora_cart_draft');
+                    this.generateIdempotencyKey();
+                },
+                'Kosongkan Keranjang',
+                'Ya, Kosongkan'
+            );
         },
 
         openPaymentModal() {
@@ -457,11 +468,11 @@ function posApp() {
                     // Open transaction receipt directly
                     window.location.href = '/transaksi/' + data.transaction.id + '/struk';
                 } else {
-                    alert('Gagal menyimpan pesanan: ' + (data.message || 'Terjadi kesalahan sistem.'));
+                    window.showAlert(data.message || 'Terjadi kesalahan sistem.', 'Gagal Menyimpan Pesanan', 'error');
                     this.isSubmitting = false;
                 }
             } catch (err) {
-                alert('Koneksi terputus: ' + err.message);
+                window.showAlert(err.message, 'Koneksi Terputus / Error', 'error');
                 this.isSubmitting = false;
             }
         }

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0FDF4"/>
+      <stop offset="100%" stop-color="#DCFCE7"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="280" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle pattern dots -->
+  <g opacity="0.07" fill="#14110F">
+    <circle cx="30" cy="30" r="3"/><circle cx="70" cy="30" r="3"/><circle cx="110" cy="30" r="3"/>
+    <circle cx="30" cy="70" r="3"/><circle cx="70" cy="70" r="3"/><circle cx="110" cy="70" r="3"/>
+    <circle cx="290" cy="30" r="3"/><circle cx="330" cy="30" r="3"/><circle cx="370" cy="30" r="3"/>
+    <circle cx="290" cy="70" r="3"/><circle cx="330" cy="70" r="3"/><circle cx="370" cy="70" r="3"/>
+  </g>
+
+  <!-- Dish Illustration -->
+  
+        <circle cx="200" cy="130" r="65" fill="#16A34A" opacity="0.15"/>
+        <rect x="155" y="110" width="40" height="40" rx="8" fill="#FDE047" stroke="#CA8A04" stroke-width="2"/>
+        <rect x="195" y="120" width="42" height="42" rx="8" fill="#EAB308" stroke="#A16207" stroke-width="2"/>
+        <rect x="175" y="90" width="38" height="38" rx="8" fill="#FACC15" stroke="#CA8A04" stroke-width="2"/>
+        <!-- Taburan cabe garam -->
+        <circle cx="190" cy="105" r="3" fill="#DC2626"/>
+        <circle cx="205" cy="112" r="3" fill="#16A34A"/>
+        <circle cx="170" cy="125" r="3" fill="#DC2626"/>
+        <circle cx="220" cy="140" r="3" fill="#DC2626"/>
+        <circle cx="210" cy="130" r="2" fill="#FFFFFF"/>
+        <circle cx="185" cy="118" r="2" fill="#FFFFFF"/>
+        
+
+  <!-- Badge Label -->
+  <g transform="translate(20, 20)">
+    <rect width="110" height="22" rx="11" fill="#15803D"/>
+    <text x="55" y="15" font-family="sans-serif" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.5">CEMILAN KRISPI</text>
+  </g>
+
+  <!-- Bottom Info Card Overlay -->
+  <rect x="0" y="205" width="400" height="75" fill="#14110F" opacity="0.9"/>
+  <text x="20" y="235" font-family="sans-serif" font-size="18" font-weight="bold" fill="#FFFFFF">Tahu Crispy</text>
+  <text x="20" y="258" font-family="sans-serif" font-size="12" fill="#E7E0D6">Cabe Garam Gurih</text>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF2F2"/>
+      <stop offset="100%" stop-color="#FEE2E2"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="280" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle pattern dots -->
+  <g opacity="0.07" fill="#14110F">
+    <circle cx="30" cy="30" r="3"/><circle cx="70" cy="30" r="3"/><circle cx="110" cy="30" r="3"/>
+    <circle cx="30" cy="70" r="3"/><circle cx="70" cy="70" r="3"/><circle cx="110" cy="70" r="3"/>
+    <circle cx="290" cy="30" r="3"/><circle cx="330" cy="30" r="3"/><circle cx="370" cy="30" r="3"/>
+    <circle cx="290" cy="70" r="3"/><circle cx="330" cy="70" r="3"/><circle cx="370" cy="70" r="3"/>
+  </g>
+
+  <!-- Dish Illustration -->
+  
+        <ellipse cx="200" cy="165" rx="75" ry="20" fill="#9CA3AF" opacity="0.3"/>
+        <path d="M135 135 C135 185 265 185 265 135 Z" fill="#DC2626" stroke="#B91C1C" stroke-width="3"/>
+        <ellipse cx="200" cy="135" rx="65" ry="20" fill="#FEF3C7"/>
+        <!-- Daging sapi cubes -->
+        <rect x="175" y="128" width="18" height="14" rx="4" fill="#78350F"/>
+        <rect x="205" y="130" width="16" height="12" rx="3" fill="#92400E"/>
+        <circle cx="165" cy="136" r="4" fill="#16A34A"/>
+        <ellipse cx="195" cy="124" rx="10" ry="5" fill="#FDE68A"/>
+        <!-- Asap uap panas -->
+        <path d="M180 105 Q175 90 185 80 M200 102 Q195 85 205 75 M220 105 Q215 90 225 80" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.8"/>
+        
+
+  <!-- Badge Label -->
+  <g transform="translate(20, 20)">
+    <rect width="110" height="22" rx="11" fill="#B91C1C"/>
+    <text x="55" y="15" font-family="sans-serif" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.5">KUAH GURIH</text>
+  </g>
+
+  <!-- Bottom Info Card Overlay -->
+  <rect x="0" y="205" width="400" height="75" fill="#14110F" opacity="0.9"/>
+  <text x="20" y="235" font-family="sans-serif" font-size="18" font-weight="bold" fill="#FFFFFF">Soto Betawi</text>
+  <text x="20" y="258" font-family="sans-serif" font-size="12" fill="#E7E0D6">Daging Sapi Kuah Santan</text>
+</svg>

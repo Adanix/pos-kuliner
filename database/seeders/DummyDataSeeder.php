@@ -378,6 +378,24 @@ class DummyDataSeeder extends Seeder
         $menus = [];
         $hppService = app(HppService::class);
 
+        $imageMap = [
+            'Ayam Goreng Kremes Sambal Bawang' => '/images/menus/ayam-kremes.svg',
+            'Ayam Bakar Kecap Pedas' => '/images/menus/ayam-bakar.svg',
+            'Bebek Goreng Gurih Krispi' => '/images/menus/bebek-krispi.svg',
+            'Nasi Goreng Spesial Telur Ceplok' => '/images/menus/nasgor-spesial.svg',
+            'Mie Goreng Jawa Spesial' => '/images/menus/mie-jawa.svg',
+            'Soto Betawi Daging Sapi Kuah Santan' => '/images/menus/soto-betawi.svg',
+            'Tahu Crispy Cabe Garam' => '/images/menus/tahu-crispy.svg',
+            'Tempe Mendoan Gurih (4 Pcs)' => '/images/menus/tempe-mendoan.svg',
+            'Kentang Goreng Saus Keju' => '/images/menus/kentang-keju.svg',
+            'Es Teh Manis Jumbo' => '/images/menus/es-teh-jumbo.svg',
+            'Es Jeruk Nipis Madu' => '/images/menus/es-jeruk-madu.svg',
+            'Es Kopi Susu Gula Aren' => '/images/menus/kopi-susu-aren.svg',
+            'Teh Tarik Dingin' => '/images/menus/teh-tarik.svg',
+            'Paket Nasi Ayam Kremes + Es Teh' => '/images/menus/paket-ayam-kremes.svg',
+            'Paket Nasi Bebek Gurih + Es Jeruk' => '/images/menus/paket-bebek-jeruk.svg',
+        ];
+
         foreach ($menusData as $mData) {
             $cat = $categories[$mData['category']];
             $menu = Menu::create([
@@ -385,7 +403,7 @@ class DummyDataSeeder extends Seeder
                 'name' => $mData['name'],
                 'description' => $mData['description'],
                 'price' => $mData['price'],
-                'image_path' => null,
+                'image_path' => $imageMap[$mData['name']] ?? null,
                 'is_active' => true,
             ]);
             $menus[$mData['name']] = $menu;
@@ -726,6 +744,12 @@ class DummyDataSeeder extends Seeder
             0,
             8800,
             sprintf('SPF-%s-0551', $todayCode)
+        );
+
+        // Update NumberSequence for today to match highest seeded transaction
+        \App\Models\NumberSequence::updateOrCreate(
+            ['scope' => 'transaction', 'period' => $todayCode],
+            ['last_value' => 5]
         );
 
         // 10. Sample AI Imports

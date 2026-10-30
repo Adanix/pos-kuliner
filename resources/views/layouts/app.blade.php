@@ -233,6 +233,77 @@
         </div>
     </nav>
 
+    <!-- Global Alert & Confirm Modals (Tailwind CSS) -->
+    <div x-data="{
+        alertModal: { open: false, title: '', message: '', type: 'error' },
+        confirmModal: { open: false, title: '', message: '', confirmText: 'Ya, Lanjutkan', onConfirm: null }
+    }"
+    @open-alert.window="alertModal.open = true; alertModal.title = $event.detail.title || 'Pemberitahuan'; alertModal.message = $event.detail.message || ''; alertModal.type = $event.detail.type || 'error'"
+    @open-confirm.window="confirmModal.open = true; confirmModal.title = $event.detail.title || 'Konfirmasi Tindakan'; confirmModal.message = $event.detail.message || ''; confirmModal.confirmText = $event.detail.confirmText || 'Ya, Lanjutkan'; confirmModal.onConfirm = $event.detail.onConfirm"
+    >
+        <!-- Alert Modal -->
+        <div x-show="alertModal.open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+            <div @click.away="alertModal.open = false" class="bg-white w-full max-w-md rounded-2xl border border-[#E7E0D6] shadow-2xl p-6">
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                          :class="alertModal.type === 'error' ? 'bg-[#FEF2F2] text-[#DC2626]' : (alertModal.type === 'success' ? 'bg-[#ECFDF5] text-[#047857]' : 'bg-[#FFFBEB] text-[#B45309]')">
+                        <template x-if="alertModal.type === 'error'">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        </template>
+                        <template x-if="alertModal.type === 'success'">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        </template>
+                        <template x-if="alertModal.type !== 'error' && alertModal.type !== 'success'">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </template>
+                    </span>
+                    <h3 class="text-base font-bold text-[#14110F]" x-text="alertModal.title"></h3>
+                </div>
+                <p class="text-xs text-[#575047] leading-relaxed mb-6 whitespace-pre-line" x-text="alertModal.message"></p>
+                <div class="flex justify-end">
+                    <button @click="alertModal.open = false" type="button" class="px-5 py-2 rounded-xl bg-[#14110F] text-white text-xs font-bold hover:bg-[#3E3E3A] transition">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirm Modal -->
+        <div x-show="confirmModal.open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+            <div @click.away="confirmModal.open = false" class="bg-white w-full max-w-md rounded-2xl border border-[#E7E0D6] shadow-2xl p-6">
+                <div class="flex items-center gap-3 mb-3 text-[#C2410C]">
+                    <span class="w-10 h-10 rounded-xl bg-[#FFF4EC] flex items-center justify-center shrink-0">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </span>
+                    <h3 class="text-base font-bold text-[#14110F]" x-text="confirmModal.title"></h3>
+                </div>
+                <p class="text-xs text-[#575047] leading-relaxed mb-6" x-text="confirmModal.message"></p>
+                <div class="flex justify-end gap-2">
+                    <button @click="confirmModal.open = false" type="button" class="px-4 py-2 rounded-xl border border-[#D3C9BD] text-xs font-semibold text-[#575047] hover:bg-[#FAF8F5]">
+                        Batal
+                    </button>
+                    <button @click="const fn = confirmModal.onConfirm; confirmModal.open = false; if (fn) fn();" type="button" class="px-5 py-2 rounded-xl bg-[#C2410C] text-white text-xs font-bold hover:bg-[#9A3412] shadow-sm">
+                        <span x-text="confirmModal.confirmText"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.showAlert = function(message, title = 'Pemberitahuan', type = 'error') {
+            window.dispatchEvent(new CustomEvent('open-alert', {
+                detail: { title, message, type }
+            }));
+        };
+
+        window.showConfirm = function(message, onConfirm, title = 'Konfirmasi Tindakan', confirmText = 'Ya, Lanjutkan') {
+            window.dispatchEvent(new CustomEvent('open-confirm', {
+                detail: { title, message, confirmText, onConfirm }
+            }));
+        };
+    </script>
+
     @stack('scripts')
 </body>
 </html>

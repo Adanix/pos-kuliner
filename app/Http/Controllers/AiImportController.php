@@ -49,15 +49,6 @@ class AiImportController extends Controller
             'channel' => ['nullable', 'string', 'in:auto,gofood,shopeefood'],
         ]);
 
-        // Monthly quota check
-        $startOfMonth = Carbon::now('Asia/Jakarta')->startOfMonth();
-        $monthlyUsage = AiImport::where('created_at', '>=', $startOfMonth)->count();
-        $monthlyQuota = (int) Setting::get('ai.monthly_quota', config('ai.monthly_quota', 300));
-
-        if ($monthlyUsage >= $monthlyQuota) {
-            return back()->with('error', "Kuota pemakaian AI bulanan ({$monthlyQuota} impor) telah habis. Silakan input transaksi manual atau hubungi pemilik.");
-        }
-
         $file = $request->file('screenshot');
         $bytes = $file->getSize();
         $contents = file_get_contents($file->getRealPath());

@@ -62,10 +62,14 @@
                                     </span>
                                 </td>
                                 <td class="px-3 py-3 text-right">
-                                    <form method="POST" action="{{ route('categories.destroy', $cat) }}" class="inline" onsubmit="return confirm('Hapus kategori ini?')">
+                                    <form method="POST" action="{{ route('categories.destroy', $cat) }}" class="inline" id="delete-cat-{{ $cat->id }}">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-xs font-semibold text-[#DC2626] hover:underline">Hapus</button>
+                                        <button type="button"
+                                                onclick="window.showConfirm('Apakah Anda yakin ingin menghapus kategori \'{{ addslashes($cat->name) }}\'?', () => document.getElementById('delete-cat-{{ $cat->id }}').submit(), 'Hapus Kategori', 'Ya, Hapus')"
+                                                class="text-xs font-semibold text-[#DC2626] hover:underline">
+                                            Hapus
+                                        </button>
                                     </form>
                                 </td>
                             </tr>

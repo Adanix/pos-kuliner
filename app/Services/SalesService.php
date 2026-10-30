@@ -49,11 +49,34 @@ class SalesService
             ]);
         }
 
+        // Auto-synchronize with highest existing number in transactions table
+        $prefix = sprintf('CIO-%s-', $period);
+        $maxExisting = Transaction::where('number', 'like', $prefix . '%')
+            ->lockForUpdate()
+            ->get()
+            ->map(function ($t) use ($prefix) {
+                return (int) str_replace($prefix, '', $t->number);
+            })
+            ->max() ?? 0;
+
+        if ($seq->last_value < $maxExisting) {
+            $seq->last_value = $maxExisting;
+        }
+
         $nextVal = $seq->last_value + 1;
         $seq->last_value = $nextVal;
         $seq->save();
 
-        return sprintf('CIO-%s-%04d', $period, $nextVal);
+        // Extra safety check: if generated number already exists, advance until unique
+        $candidate = sprintf('CIO-%s-%04d', $period, $nextVal);
+        while (Transaction::where('number', $candidate)->exists()) {
+            $nextVal++;
+            $seq->last_value = $nextVal;
+            $seq->save();
+            $candidate = sprintf('CIO-%s-%04d', $period, $nextVal);
+        }
+
+        return $candidate;
     }
 
     /**

@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'base_url' => env('CIORA_BASE_URL', 'https://ciora.id/v1'),
+    'base_url' => env('CIORA_BASE_URL', 'https://api.ciora.id/v1'),
     'api_key' => env('CIORA_API_KEY', ''),
-    'protocol' => env('CIORA_API_PROTOCOL', 'anthropic'), // anthropic | openai
-    'vision_model' => env('CIORA_VISION_MODEL', 'claude-3-5-sonnet-20241022'),
+    'protocol' => env('CIORA_API_PROTOCOL', 'openai'), // openai | anthropic
+    'vision_model' => env('CIORA_VISION_MODEL', 'gpt-4o-mini'),
     'timeout' => (int) env('CIORA_TIMEOUT', 60),
     'max_retries' => (int) env('CIORA_MAX_RETRIES', 2),
 

@@ -53,9 +53,9 @@
             @endif
 
             <!-- Form Tutup Kasir -->
-            <form method="POST" action="{{ route('pos.shift.close') }}" class="p-5 rounded-xl bg-[#F4F0EA] border border-[#E7E0D6] space-y-4">
+            <form id="form-close-shift" method="POST" action="{{ route('pos.shift.close') }}" class="p-5 rounded-xl bg-[#F4F0EA] border border-[#E7E0D6] space-y-4">
                 @csrf
-                <h4 class="font-bold text-sm text-[#14110F]">Tutup Sesi Kasir & Rekonsiliasi</h4>
+                <h4 class="font-bold text-sm text-[#14110F]">Tutup Sesi Kasir &amp; Rekonsiliasi</h4>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label for="counted_cash" class="block text-xs font-semibold text-[#575047] uppercase mb-1">Total Uang Fisik di Laci (Rp)</label>
@@ -69,9 +69,10 @@
                     </div>
                 </div>
 
-                <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menutup sesi kasir ini?')"
+                <button type="button"
+                        onclick="const input = document.getElementById('counted_cash'); if (!input.value) { window.showAlert('Harap masukkan total uang fisik di laci terlebih dahulu.', 'Data Belum Lengkap'); input.focus(); return; } window.showConfirm('Apakah Anda yakin ingin menutup sesi kasir ini dan memfinalisasi rekonsiliasi kas?', () => document.getElementById('form-close-shift').submit(), 'Tutup Sesi Kasir', 'Ya, Tutup Sesi');"
                         class="w-full sm:w-auto px-6 py-2.5 rounded-xl font-bold text-white bg-[#DC2626] hover:bg-[#b91c1c] text-sm shadow-sm transition">
-                    Tutup Kasir & Finalisasi
+                    Tutup Kasir &amp; Finalisasi
                 </button>
             </form>
         </div>

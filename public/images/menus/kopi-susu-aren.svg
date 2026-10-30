@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF7ED"/>
+      <stop offset="100%" stop-color="#FFEDD5"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="280" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle pattern dots -->
+  <g opacity="0.07" fill="#14110F">
+    <circle cx="30" cy="30" r="3"/><circle cx="70" cy="30" r="3"/><circle cx="110" cy="30" r="3"/>
+    <circle cx="30" cy="70" r="3"/><circle cx="70" cy="70" r="3"/><circle cx="110" cy="70" r="3"/>
+    <circle cx="290" cy="30" r="3"/><circle cx="330" cy="30" r="3"/><circle cx="370" cy="30" r="3"/>
+    <circle cx="290" cy="70" r="3"/><circle cx="330" cy="70" r="3"/><circle cx="370" cy="70" r="3"/>
+  </g>
+
+  <!-- Dish Illustration -->
+  
+        <circle cx="200" cy="130" r="65" fill="#78350F" opacity="0.15"/>
+        <!-- Cup Takeaway -->
+        <path d="M168 85 L175 170 C176 175 180 180 186 180 L214 180 C220 180 224 175 225 170 L232 85 Z" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/>
+        <!-- Lapisan Gula Aren Bawah -->
+        <path d="M174 155 L175 170 C176 175 180 180 186 180 L214 180 C220 180 224 175 225 170 L226 155 Z" fill="#78350F"/>
+        <!-- Lapisan Susu Tengah -->
+        <rect x="172" y="120" width="56" height="35" fill="#FEF3C7" opacity="0.9"/>
+        <!-- Lapisan Kopi Atas -->
+        <path d="M169 90 L172 120 L228 120 L231 90 Z" fill="#451A03"/>
+        <!-- Tutup Cup & Sedotan -->
+        <ellipse cx="200" cy="85" rx="35" ry="8" fill="#374151"/>
+        <line x1="205" y1="55" x2="195" y2="160" stroke="#1F2937" stroke-width="5" stroke-linecap="round"/>
+        
+
+  <!-- Badge Label -->
+  <g transform="translate(20, 20)">
+    <rect width="110" height="22" rx="11" fill="#78350F"/>
+    <text x="55" y="15" font-family="sans-serif" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.5">BEST SELLER KOPI</text>
+  </g>
+
+  <!-- Bottom Info Card Overlay -->
+  <rect x="0" y="205" width="400" height="75" fill="#14110F" opacity="0.9"/>
+  <text x="20" y="235" font-family="sans-serif" font-size="18" font-weight="bold" fill="#FFFFFF">Kopi Susu Aren</text>
+  <text x="20" y="258" font-family="sans-serif" font-size="12" fill="#E7E0D6">Espresso & Gula Aren</text>
+</svg>

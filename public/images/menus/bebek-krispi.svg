@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="100%" stop-color="#FEF3C7"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="280" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle pattern dots -->
+  <g opacity="0.07" fill="#14110F">
+    <circle cx="30" cy="30" r="3"/><circle cx="70" cy="30" r="3"/><circle cx="110" cy="30" r="3"/>
+    <circle cx="30" cy="70" r="3"/><circle cx="70" cy="70" r="3"/><circle cx="110" cy="70" r="3"/>
+    <circle cx="290" cy="30" r="3"/><circle cx="330" cy="30" r="3"/><circle cx="370" cy="30" r="3"/>
+    <circle cx="290" cy="70" r="3"/><circle cx="330" cy="70" r="3"/><circle cx="370" cy="70" r="3"/>
+  </g>
+
+  <!-- Dish Illustration -->
+  
+        <circle cx="200" cy="130" r="65" fill="#D97706" opacity="0.15"/>
+        <ellipse cx="195" cy="130" rx="55" ry="40" fill="#92400E"/>
+        <path d="M150 130 C130 110 135 85 155 75 C175 65 190 90 185 110 Z" fill="#B45309"/>
+        <path d="M230 135 L260 155 C265 158 270 155 272 150 C274 145 270 140 265 138 L240 125 Z" fill="#FDE68A" stroke="#B45309" stroke-width="2"/>
+        <circle cx="190" cy="125" r="4" fill="#FDE68A"/>
+        <circle cx="205" cy="135" r="5" fill="#FDE68A"/>
+        <circle cx="175" cy="135" r="3" fill="#FDE68A"/>
+        <circle cx="170" cy="145" r="6" fill="#DC2626"/>
+        
+
+  <!-- Badge Label -->
+  <g transform="translate(20, 20)">
+    <rect width="110" height="22" rx="11" fill="#B45309"/>
+    <text x="55" y="15" font-family="sans-serif" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.5">GURIH RENYAH</text>
+  </g>
+
+  <!-- Bottom Info Card Overlay -->
+  <rect x="0" y="205" width="400" height="75" fill="#14110F" opacity="0.9"/>
+  <text x="20" y="235" font-family="sans-serif" font-size="18" font-weight="bold" fill="#FFFFFF">Bebek Goreng</text>
+  <text x="20" y="258" font-family="sans-serif" font-size="12" fill="#E7E0D6">Gurih Krispi</text>
+</svg>

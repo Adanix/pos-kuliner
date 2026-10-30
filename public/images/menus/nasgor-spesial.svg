@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF7ED"/>
+      <stop offset="100%" stop-color="#FFEDD5"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="280" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle pattern dots -->
+  <g opacity="0.07" fill="#14110F">
+    <circle cx="30" cy="30" r="3"/><circle cx="70" cy="30" r="3"/><circle cx="110" cy="30" r="3"/>
+    <circle cx="30" cy="70" r="3"/><circle cx="70" cy="70" r="3"/><circle cx="110" cy="70" r="3"/>
+    <circle cx="290" cy="30" r="3"/><circle cx="330" cy="30" r="3"/><circle cx="370" cy="30" r="3"/>
+    <circle cx="290" cy="70" r="3"/><circle cx="330" cy="70" r="3"/><circle cx="370" cy="70" r="3"/>
+  </g>
+
+  <!-- Dish Illustration -->
+  
+        <ellipse cx="200" cy="160" rx="75" ry="22" fill="#9CA3AF" opacity="0.3"/>
+        <path d="M130 140 C130 180 270 180 270 140 Z" fill="#E5E7EB" stroke="#D1D5DB" stroke-width="3"/>
+        <ellipse cx="200" cy="140" rx="70" ry="22" fill="#D97706"/>
+        <!-- Telur Mata Sapi -->
+        <ellipse cx="200" cy="135" rx="35" ry="16" fill="#FFFFFF"/>
+        <circle cx="200" cy="134" r="12" fill="#F59E0B"/>
+        <circle cx="196" cy="131" r="3" fill="#FEF3C7"/>
+        <!-- Bawang goreng & irisan cabai -->
+        <circle cx="155" cy="140" r="3" fill="#DC2626"/>
+        <circle cx="240" cy="142" r="3" fill="#16A34A"/>
+        
+
+  <!-- Badge Label -->
+  <g transform="translate(20, 20)">
+    <rect width="110" height="22" rx="11" fill="#EA580C"/>
+    <text x="55" y="15" font-family="sans-serif" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.5">FAVORIT KASIR</text>
+  </g>
+
+  <!-- Bottom Info Card Overlay -->
+  <rect x="0" y="205" width="400" height="75" fill="#14110F" opacity="0.9"/>
+  <text x="20" y="235" font-family="sans-serif" font-size="18" font-weight="bold" fill="#FFFFFF">Nasi Goreng</text>
+  <text x="20" y="258" font-family="sans-serif" font-size="12" fill="#E7E0D6">Spesial Telur Ceplok</text>
+</svg>

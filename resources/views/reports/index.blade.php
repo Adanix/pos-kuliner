@@ -11,9 +11,9 @@
 
         <div class="flex items-center gap-2">
             <a href="{{ route('reports.export', ['period' => $period, 'start_date' => request('start_date'), 'end_date' => request('end_date')]) }}"
-               class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold bg-white border border-[#D3C9BD] text-[#14110F] hover:bg-[#FAF8F5] shadow-sm">
+               class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0] hover:bg-[#D1FAE5] transition shadow-2xs">
                 <svg class="w-4 h-4 text-[#047857]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                <span>Ekspor CSV (Excel)</span>
+                <span>Unduh File Excel (.xlsx)</span>
             </a>
         </div>
     </div>
@@ -40,12 +40,16 @@
                 </button>
             </div>
 
-            <!-- Custom Date Range -->
+            <!-- Custom Date Range (Realtime - otomatis submit saat tanggal diubah) -->
             <div class="flex items-center gap-2">
-                <input type="date" name="start_date" value="{{ request('start_date') }}" class="text-xs px-2.5 py-1.5 rounded-xl border border-[#D3C9BD] bg-[#FAF8F5]">
+                <input type="hidden" name="period" value="custom">
+                <input type="date" name="start_date" value="{{ request('start_date') }}"
+                       onchange="this.form.submit()"
+                       class="text-xs px-2.5 py-1.5 rounded-xl border border-[#D3C9BD] bg-[#FAF8F5] focus:outline-none focus:ring-2 focus:ring-[#C2410C]">
                 <span class="text-xs text-[#575047]">s/d</span>
-                <input type="date" name="end_date" value="{{ request('end_date') }}" class="text-xs px-2.5 py-1.5 rounded-xl border border-[#D3C9BD] bg-[#FAF8F5]">
-                <button type="submit" name="period" value="custom" class="px-3 py-1.5 rounded-xl bg-[#14110F] text-white text-xs font-semibold">Terapkan</button>
+                <input type="date" name="end_date" value="{{ request('end_date') }}"
+                       onchange="this.form.submit()"
+                       class="text-xs px-2.5 py-1.5 rounded-xl border border-[#D3C9BD] bg-[#FAF8F5] focus:outline-none focus:ring-2 focus:ring-[#C2410C]">
             </div>
         </form>
     </div>

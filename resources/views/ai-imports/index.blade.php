@@ -8,12 +8,6 @@
             <h1 class="text-2xl font-bold tracking-tight text-[#14110F]">AI Impor Pesanan Online</h1>
             <p class="text-sm text-[#575047] mt-0.5">Ekstrak otomatis pesanan makanan dari tangkapan layar (screenshot) GoFood dan ShopeeFood.</p>
         </div>
-
-        <!-- Quota Badge -->
-        <div class="px-4 py-2 rounded-2xl bg-white border border-[#E7E0D6] shadow-sm flex items-center gap-3">
-            <span class="text-xs text-[#575047] uppercase font-semibold">Kuota AI Bulanan:</span>
-            <span class="font-extrabold text-sm text-[#C2410C] tabular-nums">{{ $monthlyUsage }} / {{ $monthlyQuota }}</span>
-        </div>
     </div>
 
     <!-- Upload Card -->

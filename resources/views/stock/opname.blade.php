@@ -16,7 +16,7 @@
                 Belum ada bahan baku terdaftar. Tambahkan bahan baku terlebih dahulu.
             </div>
         @else
-            <form method="POST" action="{{ route('stok.opname.store') }}" class="space-y-6">
+            <form id="form-opname" method="POST" action="{{ route('stok.opname.store') }}" class="space-y-6">
                 @csrf
 
                 <div class="overflow-x-auto">
@@ -58,7 +58,8 @@
 
                 <div class="flex justify-end gap-3 pt-4 border-t border-[#E7E0D6]">
                     <a href="{{ route('stok.index') }}" class="px-4 py-2.5 rounded-xl border border-[#D3C9BD] text-xs font-semibold">Batal</a>
-                    <button type="submit" onclick="return confirm('Apakah Anda yakin ingin memproses penyesuaian stok opname ini?')"
+                    <button type="button"
+                            onclick="window.showConfirm('Apakah Anda yakin ingin memproses dan menyimpan penyesuaian stok fisik opname ini?', () => document.getElementById('form-opname').submit(), 'Simpan Stok Opname', 'Ya, Simpan Penyesuaian');"
                             class="px-6 py-2.5 rounded-xl bg-[#C2410C] text-white text-xs font-bold hover:bg-[#9A3412] shadow-sm">
                         Simpan Penyesuaian Stok
                     </button>

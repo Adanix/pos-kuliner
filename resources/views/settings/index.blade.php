@@ -144,11 +144,6 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs font-semibold text-[#575047] uppercase mb-1">Batas Kuota Bulanan (Impor)</label>
-                    <input type="number" name="ai_monthly_quota" value="{{ $aiQuota }}" min="10"
-                           class="w-full text-sm px-4 py-2.5 rounded-xl border border-[#D3C9BD] bg-[#FAF8F5]">
-                </div>
-                <div>
                     <label class="block text-xs font-semibold text-[#575047] uppercase mb-1">Masa Retensi Screenshot (Hari)</label>
                     <input type="number" name="ai_retention_days" value="{{ $retentionDays }}" min="1"
                            class="w-full text-sm px-4 py-2.5 rounded-xl border border-[#D3C9BD] bg-[#FAF8F5]">
@@ -157,7 +152,7 @@
 
             <div class="pt-3">
                 <button type="submit" class="px-6 py-2.5 rounded-xl font-bold text-white bg-[#C2410C] hover:bg-[#9A3412] text-sm shadow-sm">
-                    Simpan Batas AI
+                    Simpan Pengaturan AI
                 </button>
             </div>
         </div>
