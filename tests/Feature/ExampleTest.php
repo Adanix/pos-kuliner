@@ -97,4 +97,31 @@ class ExampleTest extends TestCase
         $relativeStoragePath = str_replace('/storage/', '', $menu->image_path);
         \Illuminate\Support\Facades\Storage::disk('public')->assertExists($relativeStoragePath);
     }
+
+    public function test_menu_and_ingredient_resource_routes(): void
+    {
+        $owner = User::create([
+            'name' => 'Owner Res Test',
+            'email' => 'owner@res.test',
+            'role' => UserRole::OWNER,
+            'password' => Hash::make('password123'),
+            'is_active' => true,
+        ]);
+
+        $category = \App\Models\Category::create(['name' => 'Makanan', 'sort_order' => 1, 'is_active' => true]);
+        $menu = \App\Models\Menu::create(['category_id' => $category->id, 'name' => 'Mie Goreng', 'price' => 15000, 'is_active' => true]);
+        $ingredient = \App\Models\Ingredient::create(['name' => 'Tepung Terigu', 'base_unit' => 'g', 'is_active' => true]);
+
+        // GET /menu/{menu} redirects to /menu
+        $this->actingAs($owner)->get("/menu/{$menu->id}")->assertRedirect('/menu');
+
+        // GET /menu/{menu} as JSON returns json data
+        $this->actingAs($owner)->getJson("/menu/{$menu->id}")->assertStatus(200)->assertJsonPath('name', 'Mie Goreng');
+
+        // GET /bahan/{bahan} redirects to /bahan
+        $this->actingAs($owner)->get("/bahan/{$ingredient->id}")->assertRedirect('/bahan');
+
+        // GET /bahan/{bahan} as JSON returns json data
+        $this->actingAs($owner)->getJson("/bahan/{$ingredient->id}")->assertStatus(200)->assertJsonPath('name', 'Tepung Terigu');
+    }
 }

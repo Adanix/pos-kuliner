@@ -113,6 +113,25 @@ class MenuController extends Controller
         return redirect()->route('menu.index')->with('success', "Menu '{$menu->name}' berhasil diperbarui.");
     }
 
+    public function show(Request $request, Menu $menu)
+    {
+        if ($request->wantsJson()) {
+            return response()->json($menu->load(['category', 'recipe.items.ingredient']));
+        }
+
+        return redirect()->route('menu.index');
+    }
+
+    public function create()
+    {
+        return redirect()->route('menu.index');
+    }
+
+    public function edit(Menu $menu)
+    {
+        return redirect()->route('menu.index');
+    }
+
     public function destroy(Menu $menu)
     {
         $name = $menu->name;

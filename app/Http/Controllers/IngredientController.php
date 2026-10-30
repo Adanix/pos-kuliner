@@ -90,4 +90,23 @@ class IngredientController extends Controller
 
         return redirect()->route('bahan.index')->with('success', "Bahan baku '{$bahan->name}' berhasil diperbarui.");
     }
+
+    public function show(Request $request, Ingredient $bahan)
+    {
+        if ($request->wantsJson()) {
+            return response()->json($bahan);
+        }
+
+        return redirect()->route('bahan.index');
+    }
+
+    public function create()
+    {
+        return redirect()->route('bahan.index');
+    }
+
+    public function edit(Ingredient $bahan)
+    {
+        return redirect()->route('bahan.index');
+    }
 }
