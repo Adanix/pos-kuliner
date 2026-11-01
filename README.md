@@ -1,58 +1,133 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# POS Kuliner - Point of Sale & Recipe Costing (HPP) System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+POS Kuliner is an integrated Point of Sale (POS) and inventory control application built specifically for culinary businesses, restaurants, cafes, and cloud kitchens. The platform bridges point-of-sale cashier transactions with automated raw material inventory deductions and real-time recipe cost of goods sold (HPP - Harga Pokok Penjualan) tracking.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Key Modules & Capabilities
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. Point of Sale Cashier
+* Touch-friendly cashier ordering interface designed for rapid order entry.
+* Cash session management: register opening balance, shift handovers, and end-of-day cash reconciliation.
+* Support for multiple settlement methods: cash, digital wallets, bank transfers, and custom payment types.
+* Itemized receipt generation with tax and service charge calculations.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 2. Menu Catalog & Variant Management
+* Structured catalog organizing items by category (Appetizers, Main Dishes, Beverages, Desserts).
+* Flexible pricing structures and modifier/variant support.
+* External delivery platform aliases for unified item management across channels.
 
-## Learning Laravel
+### 3. Dynamic Recipe Builder & Automated HPP
+* Multi-ingredient recipe formulation for every menu item.
+* Portion-level unit conversion (grams, milliliters, pieces, tablespoons).
+* Automated HPP recalculation whenever ingredient purchasing costs fluctuate.
+* Real-time gross profit margin indicators alerting managers to low-margin offerings.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 4. Inventory Control & Automated Stock Deductions
+* Real-time stock movement ledger tracking purchases, transaction deductions, waste, and manual stock counts.
+* Automatic ingredient deduction upon completed cashier checkout based on the underlying recipe.
+* Multi-outlet inventory support with separate stock balances.
+* Reorder threshold notifications for critical raw materials.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 5. AI Menu Ingestion Pipeline
+* Optical document analysis engine for extracting menu items, categories, and prices from scanned restaurant menus and digital receipts.
+* Bulk import workflow with verification and field-mapping previews before database insertion.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 6. Audit & Operational Transparency
+* Audit logging for price modifications, voids, discount applications, and drawer opening actions.
+* Historical reporting for shift turnover and daily sales performance.
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Technical Stack
 
-```bash
-composer require laravel/boost --dev
+* Framework: Laravel 13
+* Runtime: PHP 8.5
+* Database: MySQL 8.0
+* Frontend: Tailwind CSS, Blade Templating Engine
+* Containerization: Docker, Nginx
 
-php artisan boost:install
+---
+
+## Project Structure
+
+```
+app/
+├── Http/Controllers/     Cashier, Menu, Recipe, Inventory, and Report controllers
+├── Models/               Eloquent models (Menu, Recipe, Ingredient, Transaction, CashSession, Outlet)
+resources/
+├── views/                Blade views (POS register, Inventory ledger, Recipe builder, Reports)
+routes/
+├── web.php               Application endpoints and route groups
+database/
+├── migrations/           Database schema definitions
+├── seeders/              Initial culinary categories, sample menus, and recipes
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## Installation & Deployment
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Prerequisites
+* Docker and Docker Compose
+* Git
 
-## Code of Conduct
+### Setup Instructions
+1. Clone the repository into your local development environment:
+   ```bash
+   git clone <repository_url>
+   cd <repository_folder>
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. Copy the sample environment configuration:
+   ```bash
+   cp .env.example .env
+   ```
 
-## Security Vulnerabilities
+3. Update the database credentials in `.env`:
+   ```env
+   APP_NAME=POS Kuliner
+   APP_ENV=production
+   APP_DEBUG=false
+   DB_CONNECTION=mysql
+   DB_HOST=mysql
+   DB_PORT=3306
+   DB_DATABASE=laravel13_kuliner
+   DB_USERNAME=usr_kuliner
+   DB_PASSWORD=your_secure_password
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+4. Launch the application container:
+   ```bash
+   docker compose up -d
+   ```
+
+5. Install dependencies and build assets:
+   ```bash
+   composer install --no-dev --optimize-autoloader
+   npm install && npm run build
+   ```
+
+6. Generate the encryption key:
+   ```bash
+   php artisan key:generate
+   ```
+
+7. Execute database migrations and seed sample menus:
+   ```bash
+   php artisan migrate --seed
+   ```
+
+8. Cache application configuration for optimal performance:
+   ```bash
+   php artisan optimize:clear
+   php artisan config:cache
+   php artisan route:cache
+   php artisan view:cache
+   ```
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This software is distributed under the proprietary license of the author. All rights reserved.
